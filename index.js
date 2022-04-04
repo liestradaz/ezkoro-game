@@ -1,5 +1,6 @@
 const bkgImg = new Image()
 bkgImg.src = "../images/Battleground1066x600.png"
+let jumpFlag = false
 
 const battleGround =  {
     canvas: document.querySelector("canvas"),
@@ -38,9 +39,11 @@ const battleGround =  {
                     battleGround.context.drawImage(this.img, this.x - this.img.width, 0)
                 }
             }
-        }
-
-
+        },
+    enemies: [],
+    stop: function(){
+        clearInterval(this.interval)
+    }
 }
 
 
@@ -50,6 +53,8 @@ function runGame(){
     battleGround.backgroundImg.draw()
 
     knight.update()
+    updateEnemies()
+    battle()
     
     battleGround.frames++
 
@@ -64,111 +69,49 @@ function updateBackground(){
 }
 */
 
-class Character{
-    constructor(hp, attack, speed, width, height, x, y){
-        this.hp = hp
-        this.attack = attack
-        this.speed = speed
-        this.width = width
-        this.height = height
-        this.x = x
-        this.y = y
+const updateEnemies = () => {
+    for (let i = 0; i< battleGround.enemies.length; i++){
+        battleGround.enemies[i].x -= 1
+        battleGround.enemies[i].update()
     }
 
-    attack(){
-        return this.attack
-    }
-
-    defence(dmg){
-        this.hp -= dmg
+    if (battleGround.frames % 500 === 0){
+        let x = battleGround.canvas.width
+        battleGround.enemies.push(new Demon(demonHp, demonStrength, demonSpeed, demonWidth, demonHeight, x, demonY))
     }
 }
 
-class Knight extends Character{
-    constructor(hp, attack, speed, width, height, x, y){
-        super(hp, attack, speed, width, height, x, y)
-        this.img = new Image()
-        //this.img.src = "../images/idle1.png"
-        //this.img.src = "../images/knight.idle.png"
-        this.frameIdx = 0
-        
-        this.state = {
-            current: "walkAndAttack",
-            idle: 
-            {     
-                img: "../images/knight.idle.png",
-                startIdx: 0,
-                endIdx: 12  
-            },
-            walk:
-            {
-                img: "../images/knight-walk.png",
-                startIdx: 0,
-                endIdx: 5
-            },
-            walkAndAttack:
-            {
-                img: "../images/knight-walk.png",
-                startIdx: 6,
-                endIdx: 11
-            },
-            run:
-            {
-                img: "../images/knight-run.png",
-                startIdx: 0,
-                endIdx: 7
-            },
-            runAndAttack:
-            {
-                img: "../images/knight-run.png",
-                startIdx: 8,
-                endIdx: 14
-            },
-            jump:
-            {
-                img: "../images/knight-jump.png",
-                startIdx: 0,
-                endIdx: 7
-            },
-            death:
-            {
-                img: "../images/knight-death.png",
-                startIdx: 0,
-                endIdx: 9
-            }   
-        }
-    }
+//const battle = () => {
+function battle(){
+    const fight = battleGround.enemies.some((element) => {
+        if (element.closeTo(knight)){
 
-    update(){
-        //const ctx = battleGround.context
-        //ctx.drawImage(this.img,this.x,this.y,this.width,this.height)
-        if (this.state.current === "death"){
-            this.frameWidth = 256
-            this.frameHeight = 256
-        } else{
-            this.frameWidth = 128
-            this.frameHeight = 128
-        }
-        //this.idle()
-        const ctx = battleGround.context
-        this.img.src=this.state[this.state.current].img
-        ctx.drawImage(this.img, this.frameIdx * this.frameWidth, 0, this.frameWidth, this.frameHeight, this.x, this.y, this.width, this.height)
+            knight.x -= 1
 
-        
-        if(battleGround.frames % 7 === 0) { this.frameIdx++ }
-        if(this.frameIdx >= this.state[this.state.current].endIdx) { this.frameIdx = this.state[this.state.current].startIdx } 
-    }
+            if(battleGround.frames % 10 === 0 && element.state.current != "death" && knight.state.current != "death"){
+                element.state.current = "attack"
+                knight.defence(element.attack())
+                if (knight.state.current === "walkAndAttack" || knight.state.current === "runAndAttack"){
+                    element.defence(knight.attack())
+                }
+            }
+        }
+        return element.closeTo(knight)
+    })    
 }
- 
+
+function battlex2(){
+    const fight = battleGround.enemies.some( (element) => {
+
+    })
+}
 
 
 //************ Executions *************/
-const knight = new Knight(50,50,2,150,150,80,320)
+const knight = new Knight(knightHp, knightStrength, knightSpeed, knightWidth, knightHeight, knightX, knightY)
 
 battleGround.start()
 //updateBackground()
-
-
 
 
 window.onload = function(){
@@ -178,15 +121,18 @@ window.onload = function(){
         switch(event.key){
             case "ArrowLeft":
                 knight.x -= 5
-                knight.state.current = "idle"
+                knight.state.current = "walkLeft"
                 break;
             case "ArrowRight":
                 knight.x += 5
                 knight.state.current = "run"
                 break;
             case "ArrowUp":
-                knight.y -= 5
+                knight.y -= 1
                 knight.state.current = "jump"
+                jumpFlag = true
+                //knight.jump()
+                //jump()
                 break;
             case "ArrowDown":
                 knight.y += 5
@@ -195,6 +141,12 @@ window.onload = function(){
             case "m":
                 knight.y += 5
                 knight.state.current = "death"
+                break;
+            case "s":
+                battleGround.stop()
+                break;
+            case " ":
+                knight.state.current = "runAndAttack"
                 break;
             
         }
