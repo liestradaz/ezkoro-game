@@ -1,5 +1,5 @@
 const bkgImg = new Image()
-bkgImg.src = "../images/Battleground1066x600.png"
+bkgImg.src = "./images/Battleground1066x600.png"
 let jumpFlag = false
 
 const battleGround =  {
@@ -81,10 +81,9 @@ const updateEnemies = () => {
     }
 }
 
-//const battle = () => {
 function battle(){
-    const fight = battleGround.enemies.some((element) => {
-        if (element.closeTo(knight)){
+    const fight = battleGround.enemies.some((element,eIdx) => {
+        if (element.closeTo(knight) && element.state.current !== "death"){
 
             knight.x -= 1
 
@@ -94,16 +93,16 @@ function battle(){
                 if (knight.state.current === "walkAndAttack" || knight.state.current === "runAndAttack"){
                     element.defence(knight.attack())
                 }
-            }
-        }
+            } 
+        } else if(!element.closeTo(knight) && element.state.current !== "death") {element.state.current = "walk"}
+
+    if (element.x < -200) {
+        //battleGround.enemies.shift();
+        battleGround.enemies.splice(eIdx,1)
+    }
+
         return element.closeTo(knight)
     })    
-}
-
-function battlex2(){
-    const fight = battleGround.enemies.some( (element) => {
-
-    })
 }
 
 

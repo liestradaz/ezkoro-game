@@ -1,8 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap');
+
 canvas {
-    border: 1px solid blacl;
     padding: 0;
     margin: auto;
     display: block;
     width: 800px;
 }
 
+.charselection{
+    width: 800px;
+    height: 450px;
+    padding: 0;
+    margin: auto;
+    display: block;
+    background-image: url("../images/Battleground21066x600.png");
+}
+
+.charselection header{
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Grape Nuts', cursive;
+    font-weight: 700;
+    color: white;
+    background-color: rgba(128, 128, 128, 0.264);
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+#characters {
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;padding: 0 75px;
+}
+
+#characters h2{
+    color: white;
+    font-weight: 700;
+    font-family: 'Grape Nuts', cursive;
+    background-color: rgba(128, 128, 128, 0.264);
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.charbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid white;
+    border-radius: 50px;
+    background-color: rgba(229, 208, 156, 0.503);
+}
+
+.selected{
+    background-color: rgba(0, 0, 255, 0.401);
+}
+
+.charbox img{
+    margin-bottom: 10px;;
+}
+
+.charbox h2{
+    text-align: center;
+}
+
+.abilities{
+    padding: 1px 35px 10px 30px;
+}
+
+.abilities progress{
+    width: 85px;
+}
+
+.abilities p{
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Grape Nuts', cursive;
+    background-color: rgba(128, 128, 128, 0.264);
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    margin: 0px 1px;
+}
+
+.abilities span{
+    color: white;
+    font-weight: 700;
+    font-family: 'Grape Nuts', cursive;
+    background-color: rgba(128, 128, 128, 0.264);
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    padding-left: 5px;
+}
+
+#submitchar {
+    
+  border: 0;
+  box-shadow: 0;
+  background: linear-gradient(to bottom, black, grey);
+  color: #fff;
+  font-family: 'Grape Nuts', cursive;
+  padding: 15px 40px;
+  font-size: 30px;
+  border-radius: 10px;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+#submitcharbox{
+    text-align:center; 
+    margin: 15px 0px;
+}

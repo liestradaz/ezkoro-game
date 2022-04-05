@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+
+<body>
+    <div class="charselection">
+        <header>CHOOSE A CHARACTER</header>
+        <div id="characters">
+            <article id = "rogue" class="rogue charbox">
+                <h2 class="rogue">ROGUE</h2>
+                <img class = "rogue" src="../images/rogue.png" alt="">
+
+                <div class="rogue abilities">
+                    <p class = "rogue">Health:</p>
+                    <progress id="roguehp" class="rogue hp" max="100"></progress>
+                    <span class = "rogue" id = "spanroguehp"></span>
+                </div>
+                <div class="rogue abilities">
+                    <p class = "rogue">Strength:</p>
+                    <progress id="roguestrength" class="rogue strength" max="100"></progress>
+                    <span class = "rogue" id = "spanroguestrength"></span>
+                </div>
+                <div class="rogue abilities">
+                    <p class = "rogue">Speed:</p>
+                    <progress id="roguespeed" class="rogue speed" max="100"></progress>
+                    <span class = "rogue" id = "spanroguespeed"></span>
+                </div>
+            </article>
+            <article id = "knight" class="knight charbox">
+                <h2 class = "knight">KNIGHT</h2>
+                <img class = "knight" src="../images/knight.png" alt="">
+
+                <div class="knight abilities">
+                    <p class = "knight">Health:</p>
+                    <progress id="knighthp" class="knight hp" value="60" max="100"></progress>
+                    <span class = "knight" id = "spanknighthp"></span>
+                </div>
+                <div class="knight abilities">
+                    <p class = "knight">Strength:</p>
+                    <progress id="knightstrength" class="strength" value="60" max="100"></progress>
+                    <span class = "knight" id = "spanknightstrength"></span>
+                </div>
+                <div class="knight abilities">
+                    <p class = "knight">Speed:</p>
+                    <progress id="knightspeed" class="knight speed" value="60" max="100"></progress>
+                    <span class = "knight" id = "spanknightspeed"></span>
+                </div>
+            </article>
+            <article id = "mage" class="mage charbox">
+                <h2 class = "mage" >MAGE</h2>
+                <img class = "mage" src="../images/mage.png" alt="">
+                <div class="mage abilities">
+                    <p class = "mage">Health:</p>
+                    <progress id="magehp" class="mage hp" value="60" max="100"></progress>
+                    <span class = "mage" id = "spanmagehp"></span>
+                </div>
+                <div class="mage abilities">
+                    <p class = "mage">Strength:</p>
+                    <progress id="magestrength" class="mage strength" value="60" max="100"></progress>
+                    <span class = "mage" id = "spanmagestrength"></span>
+                </div>
+                <div class="mage abilities">
+                    <p class = "mage">Speed:</p>
+                    <progress id="magespeed" class="mage speed" value="60" max="100"></progress>
+                    <span class = "mage" id = "spanmagespeed"></span>
+                </div>
+            </article>
+        </div>
+
+        <div id="submitcharbox">
+            <button id="submitchar"> NEXT </button>
+        </div>
+        
+    </div>
+
+    <script src="../js/characters.js"></script>
+    <script src="../js/charselection.js"></script>
+
+</body>
+
+</html>

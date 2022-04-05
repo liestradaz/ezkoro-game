@@ -1,11 +1,29 @@
 //***Knight Global Variables */
-const knightHp = 100
-const knightStrength = 10
-const knightSpeed = 2
+const knightHp = 98
+const knightStrength = 25
+const knightSpeed = 1
 const knightWidth = 150
 const knightHeight = 150
 const knightX = 80
 const knightY = 320
+
+//***Rogue Global Variables */
+const rogueHp = 75
+const rogueStrength = 20
+const rogueSpeed = 5
+const rogueWidth = 150
+const rogueHeight = 150
+const rogueX = 80
+const rogueY = 320
+
+//***Mage Global Variables */
+const mageHp = 50
+const mageStrength = 35
+const mageSpeed = 2
+const mageWidth = 150
+const mageHeight = 150
+const mageX = 80
+const mageY = 320
 
 
 //***Demon Global Variables */
@@ -72,49 +90,49 @@ class Knight extends Character{
             current: "walk",
             idle: 
             {     
-                img: "../images/knight.idle.png",
+                img: "./images/knight.idle.png",
                 startIdx: 0,
                 endIdx: 12  
             },
             walk:
             {
-                img: "../images/knight-walk.png",
+                img: "./images/knight-walk.png",
                 startIdx: 0,
                 endIdx: 5
             },
             walkAndAttack:
             {
-                img: "../images/knight-walk.png",
+                img: "./images/knight-walk.png",
                 startIdx: 6,
                 endIdx: 11
             },
             run:
             {
-                img: "../images/knight-run.png",
+                img: "./images/knight-run.png",
                 startIdx: 0,
                 endIdx: 7
             },
             runAndAttack:
             {
-                img: "../images/knight-run.png",
+                img: "./images/knight-run.png",
                 startIdx: 8,
                 endIdx: 14
             },
             jump:
             {
-                img: "../images/knight-jump.png",
+                img: "./images/knight-jump.png",
                 startIdx: 0,
                 endIdx: 6
             },
             death:
             {
-                img: "../images/knight-death.png",
+                img: "./images/knight-death.png",
                 startIdx: 0,
                 endIdx: 9
             },
             walkLeft:
             {
-                img: "../images/knight-walkleft.png",
+                img: "./images/knight-walkleft.png",
                 startIdx: 0,
                 endIdx: 5
             }
@@ -144,12 +162,12 @@ class Knight extends Character{
         if(this.frameIdx >= this.state[this.state.current].endIdx && this.state.current !== "death") { this.frameIdx = this.state[this.state.current].startIdx } 
 
         if (this.hp <= 0){this.state.current = "death"}
-        if (knight.x < 0) {knight.x = 0}
-        if (knight.x > battleGround.width) {knight.x = 0}
-        
+        if (this.x < 0) {this.x = 0}
+        if (this.x > battleGround.canvas.width-100) {this.x = battleGround.canvas.width-100}  
 
-        if(jumpFlag){this.jump()} else {this.y = 320}
-
+        //if(jumpFlag){this.jump()} else {this.y = 320}
+        //condicion ? true : false
+        jumpFlag ? this.jump() : this.y = 320
     }
 
     jump(){
@@ -163,25 +181,30 @@ class Knight extends Character{
                     //this.y = 270
                     this.y -= 50
                     this.jumpCounter++
+                    this.x += 20
                     break;
                 case 2:
                     //this.y = 240
                     this.y -= 30
+                    this.x += 20
                     this.jumpCounter++
                     break;
                 case 3:
                     //this.y = 265
                     this.y += 20
+                    this.x += 20
                     this.jumpCounter++
                     break;
                 case 4:
                     //this.y = 290
                     this.y += 70
+                    this.x += 20
                     this.jumpCounter++
                     break;
                 case 5:
                     //this.y = 320
                     this.y += 30
+                    this.x += 20
                     this.jumpCounter = 0
                     jumpFlag = 0
                     this.state.current = "walk"
@@ -203,19 +226,19 @@ class Demon extends Character{
             current: "walk",
             walk: 
             {
-                img: "../images/demon-walk.png",
+                img: "./images/demon-walk.png",
                 startIdx: 0,
                 endIdx: 5  
             },
             attack: 
             {
-                img: "../images/demon-attack.png",
+                img: "./images/demon-attack.png",
                 startIdx: 0,
                 endIdx: 3  
             },
             death: 
             {
-                img: "../images/demon-death.png",
+                img: "./images/demon-death.png",
                 startIdx: 0,
                 endIdx: 5  
             }
