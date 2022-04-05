@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,13 +8,38 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles\style.css">
 </head>
+
 <body>
-    
-    <div id="game">
-        <canvas id="canvas" width="1066" height="600"></canvas>
+
+    <div id="startpage">
+        <header>Mondra</header>
+        <div id="elementsstart">
+            <div id="story">
+                <p > Demons and dragons have woken up from their long sleep. 
+                    They are on their way to the kingdom with the purpose of destroying it. 
+                    Your task is to stop them in bringing the new Dark Age to the world.
+                </p>
+            </div>
+            <!-- <button id="startgamebtn" href="/pages/charselection.html">START GAME</button> -->
+            <a id="startgamebtn" href="./pages/charselection.html">START GAME</a>
+            <div id=instructionsbox>
+                <h3>HOW TO PLAY?</h3>
+                <p>Jump</p>
+                <span>Left</span>
+                <img id="wasd" src="./images/WASD.png" alt="">
+                <span>Right</span>
+                <p>Idle</p>
+                <img id="spacebar" src="./images/spacebar.png" alt="">
+                <p class="endbox">Attack</p>
+            </div>
+        </div>
+        <canvas id="covercanvas" width="1066" height="110"></canvas>
     </div>
 
     <script src="js\characters.js"></script>
-    <script src="js\index.js"></script>
+    <script src="js\intro.js"></script>
+
+
 </body>
+
 </html>

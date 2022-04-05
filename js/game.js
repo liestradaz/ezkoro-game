@@ -1,9 +1,9 @@
 const bkgImg = new Image()
-bkgImg.src = "./images/Battleground1066x600.png"
+bkgImg.src = "../images/Battleground1066x600.png"
 let jumpFlag = false
 
 const battleGround =  {
-    canvas: document.querySelector("canvas"),
+    canvas: document.querySelector("#canvas"),
     frames: 0,
     start: function(){
         this.canvas.width = this.canvas.width
@@ -117,32 +117,25 @@ window.onload = function(){
 
 
     document.addEventListener("keydown",(event) => {
-        switch(event.key){
-            case "ArrowLeft":
+        switch(event.key.toUpperCase()){
+            case "A":
                 knight.x -= 5
                 knight.state.current = "walkLeft"
                 break;
-            case "ArrowRight":
+            case "D":
                 knight.x += 5
                 knight.state.current = "run"
                 break;
-            case "ArrowUp":
+            case "W":
                 knight.y -= 1
                 knight.state.current = "jump"
                 jumpFlag = true
                 //knight.jump()
                 //jump()
                 break;
-            case "ArrowDown":
+            case "S":
                 knight.y += 5
                 knight.state.current = "idle"
-                break;
-            case "m":
-                knight.y += 5
-                knight.state.current = "death"
-                break;
-            case "s":
-                battleGround.stop()
                 break;
             case " ":
                 knight.state.current = "runAndAttack"

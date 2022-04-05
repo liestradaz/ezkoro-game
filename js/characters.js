@@ -36,7 +36,7 @@ const demonY = 230
 
 
 class Character{
-    constructor(hp, strength, speed, width, height, x, y){
+    constructor(hp, strength, speed, width, height, x, y, ctx){
         this.hp = hp
         this.strength = strength
         this.speed = speed
@@ -44,6 +44,7 @@ class Character{
         this.height = height
         this.x = x
         this.y = y
+        this.ctx = ctx
     }
 
     attack(){
@@ -81,8 +82,8 @@ class Character{
 }
 
 class Knight extends Character{
-    constructor(hp, strength, speed, width, height, x, y){
-        super(hp, strength, speed, width, height, x, y)
+    constructor(hp, strength, speed, width, height, x, y, ctx){
+        super(hp, strength, speed, width, height, x, y, ctx)
         this.img = new Image()
         this.frameIdx = 0
         this.jumpCounter = 0
@@ -90,49 +91,49 @@ class Knight extends Character{
             current: "walk",
             idle: 
             {     
-                img: "./images/knight.idle.png",
+                img: "../images/knight.idle.png",
                 startIdx: 0,
                 endIdx: 12  
             },
             walk:
             {
-                img: "./images/knight-walk.png",
+                img: "../images/knight-walk.png",
                 startIdx: 0,
                 endIdx: 5
             },
             walkAndAttack:
             {
-                img: "./images/knight-walk.png",
+                img: "../images/knight-walk.png",
                 startIdx: 6,
                 endIdx: 11
             },
             run:
             {
-                img: "./images/knight-run.png",
+                img: "../images/knight-run.png",
                 startIdx: 0,
                 endIdx: 7
             },
             runAndAttack:
             {
-                img: "./images/knight-run.png",
+                img: "../images/knight-run.png",
                 startIdx: 8,
                 endIdx: 14
             },
             jump:
             {
-                img: "./images/knight-jump.png",
+                img: "../images/knight-jump.png",
                 startIdx: 0,
                 endIdx: 6
             },
             death:
             {
-                img: "./images/knight-death.png",
+                img: "../images/knight-death.png",
                 startIdx: 0,
                 endIdx: 9
             },
             walkLeft:
             {
-                img: "./images/knight-walkleft.png",
+                img: "../images/knight-walkleft.png",
                 startIdx: 0,
                 endIdx: 5
             }
@@ -226,19 +227,19 @@ class Demon extends Character{
             current: "walk",
             walk: 
             {
-                img: "./images/demon-walk.png",
+                img: "../images/demon-walk.png",
                 startIdx: 0,
                 endIdx: 5  
             },
             attack: 
             {
-                img: "./images/demon-attack.png",
+                img: "../images/demon-attack.png",
                 startIdx: 0,
                 endIdx: 3  
             },
             death: 
             {
-                img: "./images/demon-death.png",
+                img: "../images/demon-death.png",
                 startIdx: 0,
                 endIdx: 5  
             }

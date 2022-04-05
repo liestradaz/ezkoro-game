@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap');
 
+header,h1,h2,h3,p,span,button{
+    font-family: 'Grape Nuts', cursive;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    color: white;
+    
+}
+
 canvas {
     padding: 0;
     margin: auto;
@@ -7,7 +14,11 @@ canvas {
     width: 800px;
 }
 
-.charselection{
+#covercanvas{
+    border: 2px solid red;
+}
+
+.charselection, #startpage{
     width: 800px;
     height: 450px;
     padding: 0;
@@ -16,14 +27,100 @@ canvas {
     background-image: url("../images/Battleground21066x600.png");
 }
 
+#startpage header{
+    height: 40px;
+    text-align: center;
+    font-size: 80px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-weight: 700;
+    padding-bottom:100;   
+}
+
+#story{
+    border: 1px solid white;
+    border-radius: 50px;
+    background-color: rgba(57, 55, 55, 0.777);
+    width: 225px; 
+    height: 280px;
+}
+
+#story p{
+    color: white;
+    font-size: 21.5px;
+    padding: 0 15px;
+    text-align: center;
+    margin-top: 8px;
+
+}
+
+#instructionsbox{
+    border: 1px solid white;
+    border-radius: 50px;
+    text-align:center;
+    background-color: rgba(57, 55, 55, 0.777);
+}
+
+#instructionsbox h3{
+    padding: 0 50px;
+}
+
+#instructionsbox p,span{
+    margin: 0px;
+    font-size: 20px;
+    padding-right: 10px;
+}
+
+
+#wasd{
+    width: 120px;
+    margin: 0px;
+}
+
+#spacebar{
+    width: 200px;
+    margin-top: 30px;
+}
+
+.endbox{
+    padding-bottom: 10px;
+}
+
+#elementsstart {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:flex-end;
+    height: 300px;
+    padding: 10px 35px;
+}
+
+#instructionsbox p{
+    color: white;
+
+}
+
+#startgamebtn{
+    text-align: center;
+    font-family: 'Grape Nuts', cursive;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    color: white;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 10px;
+    background: linear-gradient(to bottom, black, grey);
+    text-decoration: none;
+    font-size: 30px;
+}
+
+#startgamebtn:hover{
+    background: linear-gradient(to bottom, rgba(31, 129, 228, 0.637), grey);
+}
+
 .charselection header{
     text-align: center;
     font-size: 50px;
-    font-family: 'Grape Nuts', cursive;
     font-weight: 700;
-    color: white;
-    background-color: rgba(128, 128, 128, 0.264);
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
 }
 
 #characters {
@@ -31,15 +128,12 @@ canvas {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;padding: 0 75px;
+    align-items: center;
+    padding: 0 75px;
 }
 
 #characters h2{
-    color: white;
     font-weight: 700;
-    font-family: 'Grape Nuts', cursive;
-    background-color: rgba(128, 128, 128, 0.264);
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .charbox{
@@ -48,7 +142,9 @@ canvas {
     align-items: center;
     border: 1px solid white;
     border-radius: 50px;
-    background-color: rgba(229, 208, 156, 0.503);
+    background-color: rgba(239, 202, 109, 0.599);
+    /* background-color: rgba(57, 55, 55, 0.777);
+     */
 }
 
 .selected{
@@ -61,10 +157,12 @@ canvas {
 
 .charbox h2{
     text-align: center;
+    margin-top: 5px;
 }
 
 .abilities{
-    padding: 1px 35px 10px 30px;
+    padding: 1px 35px 10px 35px;
+    margin-bottom: 1px;
 }
 
 .abilities progress{
@@ -72,35 +170,27 @@ canvas {
 }
 
 .abilities p{
-    color: white;
     font-size: 20px;
     font-weight: 700;
-    font-family: 'Grape Nuts', cursive;
-    background-color: rgba(128, 128, 128, 0.264);
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     margin: 0px 1px;
 }
 
 .abilities span{
-    color: white;
     font-weight: 700;
-    font-family: 'Grape Nuts', cursive;
-    background-color: rgba(128, 128, 128, 0.264);
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     padding-left: 5px;
 }
 
 #submitchar {
-    
   border: 0;
   box-shadow: 0;
   background: linear-gradient(to bottom, black, grey);
-  color: #fff;
-  font-family: 'Grape Nuts', cursive;
-  padding: 15px 40px;
+  padding: 15px 25px;
   font-size: 30px;
   border-radius: 10px;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+#submitchar:hover{
+    background: linear-gradient(to bottom, rgba(31, 129, 228, 0.637), grey);
 }
 
 #submitcharbox{
