@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap');
 
-header,h1,h2,h3,p,span,button{
+header,
+h1,
+h2,
+h3,
+p,
+span,
+button {
     font-family: 'Grape Nuts', cursive;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     color: white;
-    
+
 }
 
 canvas {
@@ -14,11 +20,8 @@ canvas {
     width: 800px;
 }
 
-#covercanvas{
-    border: 2px solid red;
-}
-
-.charselection, #startpage{
+.charselection,
+#startpage {
     width: 800px;
     height: 450px;
     padding: 0;
@@ -27,24 +30,24 @@ canvas {
     background-image: url("../images/Battleground21066x600.png");
 }
 
-#startpage header{
+#startpage header {
     height: 40px;
     text-align: center;
     font-size: 80px;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     font-weight: 700;
-    padding-bottom:100;   
+    padding-bottom: 100;
 }
 
-#story{
+#story {
     border: 1px solid white;
     border-radius: 50px;
     background-color: rgba(57, 55, 55, 0.777);
-    width: 225px; 
+    width: 225px;
     height: 280px;
 }
 
-#story p{
+#story p {
     color: white;
     font-size: 21.5px;
     padding: 0 15px;
@@ -53,35 +56,36 @@ canvas {
 
 }
 
-#instructionsbox{
+#instructionsbox {
     border: 1px solid white;
     border-radius: 50px;
-    text-align:center;
+    text-align: center;
     background-color: rgba(57, 55, 55, 0.777);
 }
 
-#instructionsbox h3{
+#instructionsbox h3 {
     padding: 0 50px;
 }
 
-#instructionsbox p,span{
+#instructionsbox p,
+span {
     margin: 0px;
     font-size: 20px;
     padding-right: 10px;
 }
 
 
-#wasd{
+#wasd {
     width: 120px;
     margin: 0px;
 }
 
-#spacebar{
+#spacebar {
     width: 200px;
     margin-top: 30px;
 }
 
-.endbox{
+.endbox {
     padding-bottom: 10px;
 }
 
@@ -89,17 +93,17 @@ canvas {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items:flex-end;
+    align-items: flex-end;
     height: 300px;
     padding: 10px 35px;
 }
 
-#instructionsbox p{
+#instructionsbox p {
     color: white;
 
 }
 
-#startgamebtn{
+#startgamebtn {
     text-align: center;
     font-family: 'Grape Nuts', cursive;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -112,11 +116,11 @@ canvas {
     font-size: 30px;
 }
 
-#startgamebtn:hover{
+#startgamebtn:hover {
     background: linear-gradient(to bottom, rgba(31, 129, 228, 0.637), grey);
 }
 
-.charselection header{
+.charselection header {
     text-align: center;
     font-size: 50px;
     font-weight: 700;
@@ -132,11 +136,11 @@ canvas {
     padding: 0 75px;
 }
 
-#characters h2{
+#characters h2 {
     font-weight: 700;
 }
 
-.charbox{
+.charbox {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,53 +151,58 @@ canvas {
      */
 }
 
-.selected{
+.selected {
     background-color: rgba(0, 0, 255, 0.401);
 }
 
-.charbox img{
-    margin-bottom: 10px;;
+.charbox img {
+    margin-bottom: 10px;
+    ;
 }
 
-.charbox h2{
+.charbox h2 {
     text-align: center;
     margin-top: 5px;
 }
 
-.abilities{
+.abilities {
     padding: 1px 35px 10px 35px;
     margin-bottom: 1px;
 }
 
-.abilities progress{
+.abilities progress {
     width: 85px;
 }
 
-.abilities p{
+.abilities p {
     font-size: 20px;
     font-weight: 700;
     margin: 0px 1px;
 }
 
-.abilities span{
+.abilities span {
     font-weight: 700;
     padding-left: 5px;
 }
 
 #submitchar {
-  border: 0;
-  box-shadow: 0;
-  background: linear-gradient(to bottom, black, grey);
-  padding: 15px 25px;
-  font-size: 30px;
-  border-radius: 10px;
+    text-align: center;
+    font-family: 'Grape Nuts', cursive;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    color: white;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding:12px;
+    background: linear-gradient(to bottom, black, grey);
+    text-decoration: none;
+    font-size: 30px;
 }
 
-#submitchar:hover{
+#submitchar:hover {
     background: linear-gradient(to bottom, rgba(31, 129, 228, 0.637), grey);
 }
 
-#submitcharbox{
-    text-align:center; 
-    margin: 15px 0px;
+#submitcharbox {
+    text-align: center;
+    margin: 30px 0px;
 }

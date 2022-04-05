@@ -15,4 +15,4 @@ function idleChars (){
 
 
 
-setInterval(idleChars(),20)  
+/* setInterval(idleChars(),20)   */
