@@ -1,4 +1,5 @@
-let idx = 0
+let idx = 0;
+const playGameBtn = document.getElementById("submitchar");
 
 function abilities() {
   rHp = document.getElementById("roguehp");
@@ -56,33 +57,37 @@ function selectedChar(idx) {
 
 abilities();
 
-
 document.addEventListener("keydown", (event) => {
-
   switch (event.key) {
     case "ArrowLeft":
-      idx -= 1
+      idx -= 1;
       break;
     case "ArrowRight":
-      idx += 1
+      idx += 1;
       break;
   }
 
-  if (idx > 2){idx = 0}
-  if (idx < 0){idx = 2}
+  if (idx > 2) {
+    idx = 0;
+  }
+  if (idx < 0) {
+    idx = 2;
+  }
   selectedChar(idx);
 });
 
 document.addEventListener("click", (event) => {
+  if (event.path[0].classList[0] == "rogue") {
+    idx = 0;
+  } else if (event.path[0].classList[0] == "knight") {
+    idx = 1;
+  } else if (event.path[0].classList[0] == "mage") {
+    idx = 2;
+  }
 
-    if(event.path[0].classList[0] == "rogue"){
-        idx = 0
-    } else if (event.path[0].classList[0] == "knight"){
-        idx = 1
-    }
-    else if (event.path[0].classList[0] == "mage"){
-        idx = 2
-    }
+  selectedChar(idx);
+});
 
-    selectedChar(idx);
-})
+playGameBtn.addEventListener("click", (event) => {
+  localStorage.setItem("heroMondra", idx);
+});

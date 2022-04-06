@@ -52,62 +52,93 @@ function runGame(){
     battleGround.clear()
     battleGround.backgroundImg.draw()
 
-    knight.update()
+    char.update()
     updateEnemies()
     battle()
     
     battleGround.frames++
 
 }
-/*
-function updateBackground(){
-    battleGround.backgroundImg.move()
-    battleGround.clear()
-    battleGround.backgroundImg.draw()
-
-    requestAnimationFrame(runGame)
-}
-*/
 
 const updateEnemies = () => {
-    for (let i = 0; i< battleGround.enemies.length; i++){
-        battleGround.enemies[i].x -= 1
-        battleGround.enemies[i].update()
+  const enemyRandom = Math.floor(Math.random() * 2);
+  let enemy;
+
+  for (let i = 0; i < battleGround.enemies.length; i++) {
+    battleGround.enemies[i].x -= 1;
+    battleGround.enemies[i].update();
+  }
+
+  if (battleGround.frames % 500 === 0) {
+    let x = battleGround.canvas.width;
+
+    if (enemyRandom === 0) {
+      enemy = new Demon(
+        demonHp,
+        demonStrength,
+        demonSpeed,
+        demonWidth,
+        demonHeight,
+        x,
+        demonY
+      );
+    } else {
+      enemy = new Dragon(
+        dragonHp,
+        dragonStrength,
+        dragonSpeed,
+        dragonWidth,
+        dragonHeight,
+        x,
+        dragonY
+      );
     }
 
-    if (battleGround.frames % 500 === 0){
-        let x = battleGround.canvas.width
-        battleGround.enemies.push(new Demon(demonHp, demonStrength, demonSpeed, demonWidth, demonHeight, x, demonY))
-    }
-}
+    battleGround.enemies.push(enemy);
+  }
+};
 
 function battle(){
     const fight = battleGround.enemies.some((element,eIdx) => {
-        if (element.closeTo(knight) && element.state.current !== "death"){
+        if (element.closeTo(char) && element.state.current !== "death"){
 
-            knight.x -= 1
+            char.x -= 1
 
-            if(battleGround.frames % 10 === 0 && element.state.current != "death" && knight.state.current != "death"){
+            if(battleGround.frames % 10 === 0 && element.state.current != "death" && char.state.current != "death"){
                 element.state.current = "attack"
-                knight.defence(element.attack())
-                if (knight.state.current === "walkAndAttack" || knight.state.current === "runAndAttack"){
-                    element.defence(knight.attack())
+                char.defence(element.attack())
+                if (char.state.current === "walkAndAttack" || char.state.current === "runAndAttack"){
+                    element.defence(char.attack())
                 }
             } 
-        } else if(!element.closeTo(knight) && element.state.current !== "death") {element.state.current = "walk"}
+        } else if(!element.closeTo(char) && element.state.current !== "death") {element.state.current = "walk"}
 
     if (element.x < -200) {
         //battleGround.enemies.shift();
         battleGround.enemies.splice(eIdx,1)
     }
 
-        return element.closeTo(knight)
+        return element.closeTo(char)
     })    
 }
 
+function createChar(idx){
+    switch (idx){
+        case 0:
+            const rogue = new Rogue(rogueHp, rogueStrength, rogueSpeed, rogueWidth, rogueHeight, rogueX, rogueY)
+            return rogue
+            
+        case 1:
+            const knight = new Knight(knightHp, knightStrength, knightSpeed, knightWidth, knightHeight, knightX, knightY)
+            return knight
+        case 2:
+            const mage = new Mage(mageHp, mageStrength, mageSpeed, mageWidth, mageHeight, mageX, mageY)
+            return mage
+    } 
 
+}
 //************ Executions *************/
-const knight = new Knight(knightHp, knightStrength, knightSpeed, knightWidth, knightHeight, knightX, knightY)
+const char = createChar(Number(charSelection))
 
 battleGround.start()
 //updateBackground()
@@ -115,32 +146,30 @@ battleGround.start()
 
 window.onload = function(){
 
-
     document.addEventListener("keydown",(event) => {
-        switch(event.key.toUpperCase()){
-            case "A":
-                knight.x -= 5
-                knight.state.current = "walkLeft"
-                break;
-            case "D":
-                knight.x += 5
-                knight.state.current = "run"
-                break;
-            case "W":
-                knight.y -= 1
-                knight.state.current = "jump"
-                jumpFlag = true
-                //knight.jump()
-                //jump()
-                break;
-            case "S":
-                knight.y += 5
-                knight.state.current = "idle"
-                break;
-            case " ":
-                knight.state.current = "runAndAttack"
-                break;
-            
+        switch (event.key.toUpperCase()) {
+          case "A":
+            char.x -= 5;
+            char.state.current = "walkLeft";
+            break;
+          case "D":
+            char.x += 5;
+            char.state.current = "run";
+            break;
+          case "W":
+            char.y -= 1;
+            char.state.current = "jump";
+            jumpFlag = true;
+            //knight.jump()
+            //jump()
+            break;
+          case "S":
+            char.y += 5;
+            char.state.current = "idle";
+            break;
+          case " ":
+            char.state.current = "runAndAttack";
+            break;
         }
     })
 
