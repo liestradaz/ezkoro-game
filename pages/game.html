@@ -8,9 +8,25 @@
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
-    
+    <header id="gameheader">Mondra</header>
     <div id="game">
         <canvas id="canvas" width="1066" height="600"></canvas>
+        <footer>
+            <div>
+                <p class ="by">By: Luis Ignacio Estrada</p>
+            </div>
+            <div id="musictoogle">
+                <span>Music On/Off</span>
+                <label class="switch">
+                    <input id="musicswitch" type="checkbox" defaultValue="no" value="hola">
+                    <span class="slider round"></span>
+                  </label>
+            </div>
+              <div class="socialbox">
+                  <a href="https://github.com/liestradaz/mondra-game" target="_blank"><img class="social" src="../images/github.png" alt=""></a>
+                  <a href="https://www.linkedin.com/in/liestradaz/" target="_blank"><img class="social" src="../images/linkedin.png" alt=""></a>
+              </div>
+        </footer>
     </div>
 
     <script src="../js/characters.js"></script>

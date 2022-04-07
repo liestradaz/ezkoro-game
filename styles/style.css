@@ -20,6 +20,10 @@ canvas {
     width: 800px;
 }
 
+#covercanvas{
+    margin-bottom: 5px;
+}
+
 .charselection,
 #startpage {
     width: 800px;
@@ -38,6 +42,16 @@ canvas {
     font-weight: 700;
     padding-bottom: 100;
 }
+
+ #gameheader{
+    height: 100px;
+    text-align: center;
+    font-size: 80px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-weight: 700;
+    padding-bottom: 100;
+    display: none;
+} 
 
 #story {
     border: 1px solid white;
@@ -204,5 +218,110 @@ span {
 
 #submitcharbox {
     text-align: center;
-    margin: 30px 0px;
+    margin: 25px 0px;
 }
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  footer{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      margin: auto;
+      width: 800px;
+      background-color: rgba(57, 55, 55, 0.777);
+      border: 1px solid white;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+  }
+
+
+  .social{
+      width: 50px;
+  }
+
+  #musictoogle{
+      display: flex;
+      align-items: center;
+  }
+
+  #musictoogle span{
+
+      margin-top: 0px;
+      margin-bottom: 0px;
+      font-size: 20px;
+  }
+
+  body{
+      background-image: url("../images/sky.png");
+  }
+
+  .by{
+      font-size: 25x;
+      margin: 0px;
+      padding-left: 10px;
+  }
+
+ .socialbox{
+     padding-right: 10px;
+ }

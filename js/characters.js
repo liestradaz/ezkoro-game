@@ -17,7 +17,7 @@ const rogueX = 80
 const rogueY = 320
 
 //***Mage Global Variables */
-const mageHp = 50
+const mageHp = 70
 const mageStrength = 35
 const mageSpeed = 2
 const mageWidth = 150
@@ -37,7 +37,7 @@ const demonExp = 10
 
 //***Dragon Global Variables */
 const dragonHp = 50
-const dragonStrength = 10
+const dragonStrength = 11
 const dragonSpeed = 1
 const dragonWidth = 300
 const dragonHeight = 300
@@ -205,6 +205,8 @@ class Knight extends Character{
         jumpFlag ? this.jump() : this.y = 320
 
         this.healthBar()
+
+        this.state.current === "idle" ? this.x -=1 : false
     }
 
     jump(){
@@ -346,6 +348,7 @@ class Rogue extends Character{
         jumpFlag ? this.jump() : this.y = 320
 
         this.healthBar()
+        this.state.current === "idle" ? this.x -=1 : false
     }
 
     jump(){
@@ -510,7 +513,7 @@ class Mage extends Character{
 
         this.healthBar()
 
-        
+        this.state.current === "idle" ? this.x -=1 : false
 
     }
 
@@ -560,10 +563,10 @@ class Mage extends Character{
 }
 
 class FireBall extends Character {
-  constructor(strength, speed, width, height, x, y) {
-    super(strength, speed, width, height, x, y);
+  constructor(strength, who, width, height, x, y) {
+    super(strength, width, height, x, y);
     this.strength = strength;
-    this.speed = speed;
+    this.who = who;
     this.type = "fireball"
     this.width = width;
     this.height = height;
@@ -579,12 +582,18 @@ class FireBall extends Character {
         startIdx: 7,
         endIdx: 14,
       },
+      dragonFireBall: {
+        img: "../images/dragon-fire.png",
+        startIdx: 0,
+        endIdx: 5,
+      }
     };
   }
 
   update() {
-    this.frameWidth = 128;
-    this.frameHeight = 128;
+        this.frameWidth = 128
+        this.frameHeight = 128
+
 
     const ctx = battleGround.context;
     this.img.src = this.state[this.state.current].img;
@@ -602,12 +611,12 @@ class FireBall extends Character {
 
     if (battleGround.frames % 7 === 0) {
       this.frameIdx++;
+
     }
 
     if (this.frameIdx >= this.state[this.state.current].endIdx) {
       this.frameIdx = this.state[this.state.current].startIdx;
     }
-
   }
 }
 
@@ -675,6 +684,7 @@ class Dragon extends Character{
         this.img = new Image()
         this.frameIdx = 0
         this.type = "dragon"
+        this.fireBalls = []
         this.offset = [90,75,170,190]
         this.state = {
             current: "walk",

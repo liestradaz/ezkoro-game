@@ -7,7 +7,6 @@ audio.src = "../audio/beyond-new-horizons-viking-medieval.mp3"
 audio.muted = true
 audio.loop = true
 
-
 const battleGround =  {
     canvas: document.querySelector("#canvas"),
     frames: 0,
@@ -65,7 +64,6 @@ const battleGround =  {
     }
 }
 
-
 function runGame(){
     battleGround.backgroundImg.move()
     battleGround.clear()
@@ -78,6 +76,9 @@ function runGame(){
     
     battleGround.frames++
     checkGameOver()
+
+    isMusicOn()
+   
    
 }
 
@@ -129,6 +130,15 @@ function battle(){
             }
             char.x -= 1
 
+            if(element.type === "dragon"){
+                createFireBall(element)
+                const draggyFireBall = element.fireBalls[0]
+                draggyFireBall.state.current = "dragonFireBall"
+                draggyFireBall.update()
+                draggyFireBall.x = element.x + element.offset[0] - 120
+                draggyFireBall.y = element.y + element.offset[1] + 25
+            }
+
             if(battleGround.frames % 10 === 0 && element.state.current != "death"){
                 element.state.current = "attack"
                 char.defence(element.attack())
@@ -142,6 +152,7 @@ function battle(){
             if (char.type === "mage" && char.state.current === "fireAttack"){
                 const throwFireBall = char.fireBalls[0]
 
+                throwFireBall.state.current = "fireBall"
                 throwFireBall.update()
                 throwFireBall.x += 5
 
@@ -192,12 +203,17 @@ function createChar(idx){
 
 }
 
-function mageFireBall(mage){
-    if (mage.type === "mage"){
-        const mageFire = new FireBall(50,2, mageWidth, mageHeight, mage.x+mage.offset[0], mage.y)
+function createFireBall(who){
+    if (who.type === "mage"){
+        const mageFire = new FireBall(50,"mage", mageWidth, mageHeight, who.x+who.offset[0], who.y)
 
-        mage.fireBalls.push(mageFire)
+        who.fireBalls.push(mageFire)
+    } else if(who.type === "dragon"){
+        const dragonFire = new FireBall(dragonStrength,"dragon", 128, 128, who.x+who.offset[0], who.y)
+
+        who.fireBalls.push(dragonFire)
     }
+
 
    //return mageFire
 }
@@ -214,12 +230,21 @@ function checkGameOver(){
     
 }
 
+function isMusicOn(){
+    if(toggleSwitch.checked){
+        audio.muted = false
+        audio.play()
+    } else {
+        audio.muted = true
+    }
+}
+
 //************ Executions *************/
 const char = createChar(Number(charSelection))
 
 battleGround.start()
 
-
+const toggleSwitch = document.getElementById("musicswitch")
 
 window.onload = function(){
 
@@ -239,17 +264,15 @@ window.onload = function(){
             jumpFlag = true;
             break;
           case "S":
-            char.y += 5;
+            char.x -= 1;
             char.state.current = "idle";
             break;
           case " ":
-            //  audio.muted = false
-            //audio.play()
             battleGround.audio()
             char.state.current = "runAndAttack";
             if (char.type === "mage"){
                 char.state.current = "fireAttack"
-                mageFireBall(char)
+                createFireBall(char)
             }
             break;
             case "Y":
