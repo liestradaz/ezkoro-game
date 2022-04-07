@@ -2,6 +2,12 @@ const bkgImg = new Image()
 bkgImg.src = "../images/Battleground1066x600.png"
 let jumpFlag = false
 
+const audio = new Audio()
+audio.src = "../audio/beyond-new-horizons-viking-medieval.mp3"
+audio.muted = true
+audio.loop = true
+
+
 const battleGround =  {
     canvas: document.querySelector("#canvas"),
     frames: 0,
@@ -41,6 +47,19 @@ const battleGround =  {
             }
         },
     enemies: [],
+    drawScore: function(){
+        this.context.font = "40px Grape Nuts"
+        this.context.fillStyle = "white"
+        this.context.fillText(`Experience: ${char.score}    Health Points: ${char.hp}`, 75, 580)
+        //this.context.fillText(`Health Points: ${char.hp}`, 300, 580)
+    },
+    audio: function(){
+        const audio = new Audio()
+        audio.src = "../audio/beyond-new-horizons-viking-medieval.mp3"
+        audio.muted = true
+        audio.loop = true
+        audio.play()
+    },
     stop: function(){
         clearInterval(this.interval)
     }
@@ -55,9 +74,11 @@ function runGame(){
     char.update()
     updateEnemies()
     battle()
+    battleGround.drawScore()
     
     battleGround.frames++
-
+    checkGameOver()
+   
 }
 
 const updateEnemies = () => {
@@ -72,6 +93,7 @@ const updateEnemies = () => {
   if (battleGround.frames % 500 === 0) {
     let x = battleGround.canvas.width;
 
+    //Create a random Demon or Dragon
     if (enemyRandom === 0) {
       enemy = new Demon(
         demonHp,
@@ -102,18 +124,50 @@ function battle(){
     const fight = battleGround.enemies.some((element,eIdx) => {
         if (element.closeTo(char) && element.state.current !== "death"){
 
+            if (char.type === "mage" && char.state.current === "fireAttack"){
+                char.state.current = "runAndAttack"
+            }
             char.x -= 1
 
-            if(battleGround.frames % 10 === 0 && element.state.current != "death" && char.state.current != "death"){
+            if(battleGround.frames % 10 === 0 && element.state.current != "death"){
                 element.state.current = "attack"
                 char.defence(element.attack())
                 if (char.state.current === "walkAndAttack" || char.state.current === "runAndAttack"){
                     element.defence(char.attack())
                 }
             } 
-        } else if(!element.closeTo(char) && element.state.current !== "death") {element.state.current = "walk"}
+        } else if(!element.closeTo(char) && element.state.current !== "death") {
+            element.state.current = "walk"
 
-    if (element.x < -200) {
+            if (char.type === "mage" && char.state.current === "fireAttack"){
+                const throwFireBall = char.fireBalls[0]
+
+                throwFireBall.update()
+                throwFireBall.x += 5
+
+                if (element.closeTo(throwFireBall) && element.state.current !== "death"){
+                    element.defence(throwFireBall.attack())
+                    char.fireBalls.shift()
+                    char.state.current = "walk"
+                }
+
+                if(throwFireBall.x > battleGround.canvas.width){
+                    char.fireBalls.shift()
+                    char.state.current = "walk"
+                }
+                
+            }
+        }
+
+        if (element.state.current === "death" && element.state.death.exp > 0){
+            char.score += element.state.death.exp
+            element.state.death.exp = 0
+            char.hp += element.state.death.loot
+            element.state.death.loot = 0
+            char.hp > char.fullHP ? char.hp = char.fullHP : char.hp
+        }
+
+        if (element.x < -200) {
         //battleGround.enemies.shift();
         battleGround.enemies.splice(eIdx,1)
     }
@@ -137,11 +191,34 @@ function createChar(idx){
     } 
 
 }
+
+function mageFireBall(mage){
+    if (mage.type === "mage"){
+        const mageFire = new FireBall(50,2, mageWidth, mageHeight, mage.x+mage.offset[0], mage.y)
+
+        mage.fireBalls.push(mageFire)
+    }
+
+   //return mageFire
+}
+
+function checkGameOver(){
+
+    if (char.state.current === "death"){
+        const gameOver = new Image()
+        gameOver.src = "../images/restart.png"
+        Image.onload = battleGround.context.drawImage(gameOver, 0, 0, battleGround.canvas.width, battleGround.canvas.height)
+    } else{
+        return false
+    }
+    
+}
+
 //************ Executions *************/
 const char = createChar(Number(charSelection))
 
 battleGround.start()
-//updateBackground()
+
 
 
 window.onload = function(){
@@ -160,16 +237,37 @@ window.onload = function(){
             char.y -= 1;
             char.state.current = "jump";
             jumpFlag = true;
-            //knight.jump()
-            //jump()
             break;
           case "S":
             char.y += 5;
             char.state.current = "idle";
             break;
           case " ":
+            //  audio.muted = false
+            //audio.play()
+            battleGround.audio()
             char.state.current = "runAndAttack";
+            if (char.type === "mage"){
+                char.state.current = "fireAttack"
+                mageFireBall(char)
+            }
             break;
+            case "Y":
+                if (char.state.current === "death"){
+                    window.location.href = "./charselection.html";
+                }
+
+                break;
+            case "N":
+                if (char.state.current === "death"){
+                    const theEnd = new Image()
+                    theEnd.src = "../images/gameover.png"
+                    Image.onload = battleGround.context.drawImage(theEnd, 0, 0, 800, 500)
+                    battleGround.stop()
+                    window.location.href = "../index.html";
+                    //battleGround.canvas.style.display = "none";
+                }
+                break;
         }
     })
 

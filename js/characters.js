@@ -27,19 +27,23 @@ const mageY = 320
 
 //***Demon Global Variables */
 const demonHp = 50
-const demonStrength = 1
+const demonStrength = 7
 const demonSpeed = 3
 const demonWidth = 300
 const demonHeight = 300
 const demonY = 230
+const demonLoot = 10
+const demonExp = 10
 
 //***Dragon Global Variables */
 const dragonHp = 50
-const dragonStrength = 20
+const dragonStrength = 10
 const dragonSpeed = 1
 const dragonWidth = 300
 const dragonHeight = 300
 const dragonY = 230
+const dragonLoot = 10
+const dragonExp = 10
 
 //If localStorage variable doesnt exist then char selected = 0
 localStorage.getItem("heroMondra") ? charSelection = localStorage.getItem("heroMondra") : charSelection = 0
@@ -54,6 +58,7 @@ class Character{
         this.height = height
         this.x = x
         this.y = y
+        this.score = 0
     }
 
     attack(){
@@ -65,19 +70,19 @@ class Character{
     }
 
     left() {
-        return this.x
+        return this.x + this.offset[0]
     }
 
     right(){
-        return this.x + this.width
+        return this.x + this.width - this.offset[2]
     }
 
     top(){
-        return this.y
+        return this.y //+ this.offset[1]
     }
 
     bottom(){
-        return this.y + this.height
+        return this.y + this.height //- this.offset[3]
     }
 
     closeTo(obstacle){
@@ -105,12 +110,12 @@ class Character{
         ctx.fill()
     }
 }
-
 class Knight extends Character{
     constructor(hp, strength, speed, width, height, x, y){
         super(hp, strength, speed, width, height, x, y)
         this.img = new Image()
         this.frameIdx = 0
+        this.type = "knight"
         this.jumpCounter = 0
         this.offset = [20,50,80,86]
         this.state = {
@@ -251,6 +256,7 @@ class Rogue extends Character{
         super(hp, strength, speed, width, height, x, y)
         this.img = new Image()
         this.frameIdx = 0
+        this.type = "rogue"
         this.jumpCounter = 0
         this.offset = [20,60,70,110]
         this.state = {
@@ -391,7 +397,9 @@ class Mage extends Character{
         super(hp, strength, speed, width, height, x, y)
         this.img = new Image()
         this.frameIdx = 0
+        this.type = "mage"
         this.jumpCounter = 0
+        this.fireBalls = []
         this.offset = [20,50,75,110]
         this.state = {
             current: "walk",
@@ -474,16 +482,25 @@ class Mage extends Character{
         if(battleGround.frames % 7 === 0) { 
             if(this.state.current === "death" && this.frameIdx === this.state.death.endIdx){
                 this.frameIdx = this.state.death.endIdx 
-            } else {
+            } else if (this.state.current === "fireAttack" && this.frameIdx >= this.state.fireAttack.endIdx-1){
+                this.frameIdx = 5
+                //this.state.current = "walk"
+                this.x -= 5
+            }
+            else {
                 this.frameIdx++ 
             }
         }
-        if(this.frameIdx >= this.state[this.state.current].endIdx && this.state.current !== "death") { this.frameIdx = this.state[this.state.current].startIdx } 
+
+        if(this.frameIdx >= this.state[this.state.current].endIdx && this.state.current !== "death" && this.state.current !== "fireAttack") {
+            this.frameIdx = this.state[this.state.current].startIdx 
+        } 
 
         if (this.hp <= 0){
             this.hp = 0
             this.state.current = "death"
         }
+
         if (this.x < 0) {this.x = 0}
         if (this.x > battleGround.canvas.width-100) {this.x = battleGround.canvas.width-100}  
 
@@ -492,6 +509,8 @@ class Mage extends Character{
         jumpFlag ? this.jump() : this.y = 320
 
         this.healthBar()
+
+        
 
     }
 
@@ -540,12 +559,65 @@ class Mage extends Character{
     }
 }
 
+class FireBall extends Character {
+  constructor(strength, speed, width, height, x, y) {
+    super(strength, speed, width, height, x, y);
+    this.strength = strength;
+    this.speed = speed;
+    this.type = "fireball"
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.img = new Image();
+    this.frameIdx = 7;
+    this.offset = [20, 50, 75, 110];
+    this.state = {
+      current: "fireBall",
+      fireBall: {
+        img: "../images/mage-fireattack.png",
+        startIdx: 7,
+        endIdx: 14,
+      },
+    };
+  }
+
+  update() {
+    this.frameWidth = 128;
+    this.frameHeight = 128;
+
+    const ctx = battleGround.context;
+    this.img.src = this.state[this.state.current].img;
+    ctx.drawImage(
+      this.img,
+      this.frameIdx * this.frameWidth,
+      0,
+      this.frameWidth,
+      this.frameHeight,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+
+    if (battleGround.frames % 7 === 0) {
+      this.frameIdx++;
+    }
+
+    if (this.frameIdx >= this.state[this.state.current].endIdx) {
+      this.frameIdx = this.state[this.state.current].startIdx;
+    }
+
+  }
+}
+
 class Demon extends Character{
     constructor(hp, strength, speed, width, height, x, y) {
         super(hp, strength, speed, width, height, x, y)
         this.img = new Image()
         this.frameIdx = 0
-        this.offset = [140,90,225,185]
+        this.type = "demon"
+        this.offset = [130,90,200,185]
         this.state = {
             current: "walk",
             walk: 
@@ -564,7 +636,9 @@ class Demon extends Character{
             {
                 img: "../images/demon-death.png",
                 startIdx: 0,
-                endIdx: 5  
+                endIdx: 5,
+                loot: demonLoot,
+                exp: demonExp  
             }
         }
     } 
@@ -600,6 +674,7 @@ class Dragon extends Character{
         super(hp, strength, speed, width, height, x, y)
         this.img = new Image()
         this.frameIdx = 0
+        this.type = "dragon"
         this.offset = [90,75,170,190]
         this.state = {
             current: "walk",
@@ -619,7 +694,9 @@ class Dragon extends Character{
             {
                 img: "../images/dragon-death.png",
                 startIdx: 1,
-                endIdx: 5  
+                endIdx: 5,
+                loot: dragonLoot,
+                exp: dragonExp  
             }
         }
     } 
